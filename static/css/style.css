@@ -1,0 +1,39 @@
+
+.body {
+  background-color:lightgrey;
+}
+
+.wilson {
+  background-color: white;
+  margin: 0%;
+  padding: 0%;
+  margin: 0px;
+}
+
+#jumbo {
+  margin: 0px;
+}
+
+.wrapper {
+
+}
+
+.brand-logo {
+  max-height: 200px;
+  max-width: 200px;
+  color: black;
+
+}
+
+.jumbotron {
+  margin: 0px 0px 0px 0px;
+  margin-bottom: 0%;
+  padding: 0%;
+  height: 500px;
+  width: 100%;
+  background-image: url('../images/tmt-raleigh.jpg');
+  background-position-y: 65%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+

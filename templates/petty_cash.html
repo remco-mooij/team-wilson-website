@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- <meta charset="utf-8"> -->
+  <title>Team Wilson</title>
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> -->
+  <link rel="stylesheet" href="../static/css/petty_cash.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <img class="navbar-brand brand-logo" src="../static/images/twomen-logo.jpg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Performance</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Resources
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Marketing</a>
+            <a class="dropdown-item" href="#">AR Reports</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Employees</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Transactions
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">American Express</a>
+            <a class="dropdown-item" href="petty_cash.html">Petty Cash</a>
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container-fluid wrapper" style="margin-top:0px;">
+    
+    <div class=row-md-6>
+    <div class="hero text-center">
+      <br>
+      <h1>Petty Cash</h1>
+      <div id="ajax">
+      <p> Enter Transactions</p>
+    </div>
+      <!-- <p>{{form}}</p> -->
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+    <div class="row margin-top-50 justify-content-md-center">
+      <div class="col-md-2">
+        <aside class="filters">
+    
+        
+          
+          <div class="panel panel-default">
+            <div class="panel-heading forms-panel">Enter Transaction</div>
+              <div class="panel-body">
+                <form >
+                  <div class="list-group-item">
+                    <label for="name">Date*</label>
+                    <input class="form-control" id="datepicker" type='text' name=expDate>
+                  </div>
+                  <div class="list-group-item">
+                    <label for="customer-id">Receipt Number*</label>
+                    <input class="form-control" id="receiptNumber" type="text" name=expReceipt value="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="customer-id">Description*</label>
+                    <input class="form-control" id="description" type="text" name=expDescr value="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="sales-order">Amount Deposited</label>
+                    <input class="form-control" id="depAmount" type="text" name=expAmountDep value="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="sales-order">Amount Withdrawn</label>
+                    <input class="form-control" id="withAmount" type="text" name=expAmountWith value="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="sales-order">Received By*</label>
+                    <input class="form-control" id="receivedBy" type="text" name=expReceived value="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="sales-order">Approved By*</label>
+                    <input class="form-control" id="approvedBy" type="text" name=expApproved value ="">
+                  </div>
+                  <div class="list-group-item">
+                    <label for="sales-order">Comments</label>
+                    <input class="form-control" id="comments" type="text" name=expComments value="">                   
+                  </div>
+               
+                
+                    <p class style=>* Required field</p>
+             
+                  
+                  
+             
+                  <!-- <button id="submit-btn" type="button" class="btn btn-light add-btn">Add</button> -->
+                  <button id="submit-btn" type="submit" class="btn btn-light submit-btn">Submit</button>
+                  <br><br>
+
+                </form>
+                <p id="successAlert" class="alert alert-success" role="alert"></p>
+                <p id="errorAlert" class="alert alert-danger" role="alert"></p>
+                <br>
+              </div>
+          
+          </aside>
+        </div>
+        <div class="col-md-9">
+          <div id="table-area" class="">
+            <table id="table" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <col width="10%">
+                  <col width="10%">
+                  <col width="20%">
+                  <col width="10%">
+                  <col width="10%">
+                  <col width="15%">
+                  <col width="15%">
+                  <col width="20%">
+                  <th class="table-head">Date</th>
+                  <th class="table-head">Receipt #</th>
+                  <th class="table-head">Description</th>
+                  <th class="table-head">Amount Deposited</th>
+                  <th class="table-head">Amount Withdrawn</th>
+                  <th class="table-head">Received By</th>
+                  <th class="table-head">Approved By</th>
+                  <th class="table-head">Comments</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer" style="text-align:center;padding: 0.5%;">
+      <span class="bottom">Two Men and a Truck - Team Wilson</span>
+      <br>
+    </footer>
+  </div>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script> --> -->
+
+  <!-- <script src="../static/js/petty_cash.js"></script> -->
+  <script type="text/javascript" src="../static/js/jquery-3.5.1.min.js"></script> -->
+  <script type="text/javascript" src="../static/js/jquery-ui.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+
+
+.wrapper {
+    background-color: lightgrey;
+  }
+  
+  .brand-logo {
+    max-height: 200px;
+    max-width: 200px;
+    color: black;
+  
+  }
+
+.forms-panel {
+  margin:auto;
+  width: 98%;
+  background-color: rgb(91, 123, 165);
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  /* border-radius: 10px; */
+  padding: 5px;
+  margin-bottom: 2.5px;
+  margin-top: 5px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(238, 227, 204, 0.397);
+
+}
+
+.add-btn {
+  float: left;
+  width: 45%;
+}
+
+.submit-btn {
+  float: right;
+  width: 45%
+}
