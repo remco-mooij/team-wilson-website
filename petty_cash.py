@@ -1,5 +1,6 @@
 import os
 from flask import Flask, flash, request, redirect, url_for, render_template, session, jsonify, Response
+import numpy as np
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -73,12 +74,23 @@ def submit():
     else:
         return jsonify({'error': 'Missing data!'})
 
-# @app.route('/filter', methods=['POST'])
-# def filter():
-#     session = Session(engine)
+@app.route('/filter', methods=['POST'])
+def filter():
+    session = Session(engine)
 
-#     fromDate = request.form['fromDate']
-#     toDate = request.form['toDate']
+    fromDate = request.form['fromDate']
+    toDate = request.form['toDate']
+
+    if (fromDate and toDate):
+        results = session.query(pettyCash.date).filter(pettyCash.date > '05/27/2020').all()
+        test = list(np.ravel(results))
+        
+        return jsonify({'result': test})
+
+    
+    else:
+        return jsonify({'error': 'Missing data!'})
+
     
 if __name__ == '__main__':
     app.run(debug=True)
