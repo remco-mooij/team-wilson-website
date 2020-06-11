@@ -82,10 +82,12 @@ def filter():
     toDate = request.form['toDate']
 
     if (fromDate and toDate):
-        results = session.query(pettyCash.date).filter(pettyCash.date > '05/27/2020').all()
-        test = list(np.ravel(results))
+        results = session.query(pettyCash.date, pettyCash.receipt_number, pettyCash.description,\
+                        pettyCash.amount_deposited, pettyCash.amount_withdrawn, pettyCash.amount_receivedby,\
+                        pettyCash.amount_approvedby, pettyCash.comments)\
+                        .filter(pettyCash.date).filter(pettyCash.date > '05/27/2020').all()
         
-        return jsonify({'result': test})
+        return jsonify({'result': results})
 
     
     else:

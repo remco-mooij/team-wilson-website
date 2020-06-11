@@ -76,6 +76,10 @@ $(document).ready(function() {
             }
             else {
                 $('#successAlert').text(data.result).show();
+                var filteredData = data.result;
+                console.log(filteredData);
+                var tableArray = []
+
                 // var dateInput = $('#datepicker').val();
                 // var receiptInput = $('#receiptNumber').val();
                 // var description = $('#description').val();
