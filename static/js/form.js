@@ -7,11 +7,18 @@ $(document).ready(function() {
         $(".datepicker").datepicker();
     });
 
+    var clicked = false;
+
+
     $('#enterTrans').on('submit', function(event) {
+        if (clicked === true) {
+            $('#tbody').find('tr').remove();
+            clicked = false;
+        };
         
         $.ajax({
             data: {
-                expDate : $('#datepicker').val(),
+                expDate: $('#datepicker').val(),
                 expReceipt: $('#receiptNumber').val(),
                 expDescr: $('#description').val(),
                 expAmountDep: $('#depAmount').val(),
@@ -29,7 +36,7 @@ $(document).ready(function() {
                 $('#errorAlert').text(data.error).show();
             }
             else {
-                var dateInput = data.message;
+                var dateInput = data.transDate;
                 var receiptInput = data.receipt;
                 var description = data.descr;
                 var depAmount = data.amountDep;
@@ -37,6 +44,7 @@ $(document).ready(function() {
                 var receivedBy = data.received;
                 var approvedBy = data.approved;
                 var comments = data.comments;
+               
 
                 var tableArray = []
                 tableArray.push(dateInput, receiptInput, description, depAmount, withAmount, receivedBy, approvedBy, comments);
@@ -51,7 +59,7 @@ $(document).ready(function() {
                     
                 tbody.append(row);
 
-                $('#successAlert').text('test').show();
+                $('#successAlert').text(data.date).show();
             };
         });
 
@@ -59,7 +67,8 @@ $(document).ready(function() {
     });
 
     $('#filterTrans').on('submit', function(event) {
-        
+        clicked = true;
+
         $.ajax({
             data: {
                 fromDate : $('#fromDate').val(),
@@ -73,8 +82,9 @@ $(document).ready(function() {
             if (data.error) {
                 $('#errorAlert').text(data.error).show();
             }
+            // filter table
             else {
-                $('#successAlert').text(data.result).show();
+                $('#tbody').find('tr').remove();
                 var filteredData = data.result;
 
                 var tableArray = []

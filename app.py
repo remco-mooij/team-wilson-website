@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, render_template, session, jsonify, Response
+from flask import Flask, flash, request, redirect, url_for, render_template, session, jsonify, Response, send_from_directory, abort, config
 
 # import sqlalchemy
 # from sqlalchemy.ext.automap import automap_base
@@ -26,38 +26,23 @@ from flask import Flask, flash, request, redirect, url_for, render_template, ses
 # Base.metadata.create_all(engine)
 
 
-
 app = Flask(__name__)
+
+app.config["PETTY_CASH_LOGS"] = "C:/Users/Remco/tmt/team-wilson-website/static/logs"
 
 @app.route('/')
 def index():
-    return render_template('petty_cash.html')
+    return "it works!"
 
-@app.route('/process', methods=['POST'])
-def process():
-  
-    # session = Session(engine)
-
-    hi = request.form['expDate']
-    # expReceipt = request.form['expReceipt']
-    # expDescr = request.form['expDescr']
-    # expAmountDep = request.form['expAmountDep']
-    # expAmountWith = request.form['expAmountWith']
-    # expReceived = request.form['expReceived']
-    # expApproved = request.form['expApproved']
-    # expComments = request.form['expComments']
-
-    # session.add(pettyCash(date=expDate))
-    # session.commit()
-
-    if hi:
-        newDate = hi[::-1]
-        return jsonify({'test': newDate})
-    
-    return jsonify({'error' : 'Missing data!'})
-
+@app.route('/download/<filename>')
+def download(filename):
+    try:
+        return send_from_directory(
+            directory=app.config["PETTY_CASH_LOGS"], filename=filename, as_attachment=True
+            )
+    except FileNotFoundError:
+        abort(404)
 
     
-
 if __name__ == '__main__':
     app.run(debug=True)

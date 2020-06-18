@@ -1,6 +1,7 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, render_template, session, jsonify, Response
+from flask import Flask, flash, request, redirect, url_for, render_template, session, jsonify, Response, send_from_directory, abort
 import numpy as np
+import pandas as pd
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -9,6 +10,7 @@ from sqlalchemy import create_engine, func
 
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+
 Base = declarative_base()
 
 class pettyCash(Base):
@@ -28,6 +30,8 @@ Base.metadata.create_all(engine)
 
 
 app = Flask(__name__)
+
+app.config["PETTY_CASH_LOGS"] = "C:/Users/Remco/tmt/team-wilson-website/static/logs"
 
 @app.route('/')
 def index():
@@ -62,37 +66,74 @@ def submit():
                     amount_approvedby=expApproved, comments=expComments))
         session.commit()
 
-        return jsonify({'date': expDate},
-                       {'receipt': expReceipt},
-                       {'descr': expDescr},
-                       {'amountDep': expAmountDep},
-                       {'amountWith': expAmountWith},
-                       {'received': expReceived},
-                       {'approved': expApproved},
-                       {'comments': expComments})
+        return jsonify({'transDate': expDate,
+                        'receipt': expReceipt,
+                        'descr': expDescr,
+                        'amountDep': expAmountDep,
+                        'amountWith': expAmountWith,
+                        'received': expReceived,
+                        'approved': expApproved,
+                        'comments': expComments})
 
     else:
         return jsonify({'error': 'Missing data!'})
 
 @app.route('/filter', methods=['POST'])
 def filter():
+    
     session = Session(engine)
 
     fromDate = request.form['fromDate']
     toDate = request.form['toDate']
 
+    # query and return results between 'from date' and 'to date'
     if (fromDate and toDate):
         results = session.query(pettyCash.date, pettyCash.receipt_number, pettyCash.description,\
                         pettyCash.amount_deposited, pettyCash.amount_withdrawn, pettyCash.amount_receivedby,\
                         pettyCash.amount_approvedby, pettyCash.comments)\
-                        .filter(pettyCash.date).filter(pettyCash.date > '05/27/2020').all()
+                        .filter(pettyCash.date >= fromDate).filter(pettyCash.date <= toDate).order_by(pettyCash.date).all()
         
+        # remove any previously downloaded logs
+        log_files = os.listdir('static/logs')
+        if log_files:
+            for log in log_files:
+                os.remove(os.path.join(app.config["PETTY_CASH_LOGS"], log))
+
+        # export query results to excel
+        results_df = pd.DataFrame(results)
+        results_df.to_excel('static/logs/output.xlsx', index=False)
+
         return jsonify({'result': results})
 
-    
+    # elif fromDate:
+
     else:
         return jsonify({'error': 'Missing data!'})
 
+
+@app.route('/download')
+def download():
+
+    log_files = os.listdir('static/logs')
+    for log in log_files:
+        try:
+            return send_from_directory(
+                directory=app.config["PETTY_CASH_LOGS"], filename=log, as_attachment=True
+                )
+        except FileNotFoundError:
+            abort(404)
+
+@app.route('/test')
+def test():
+    files = os.listdir('static/logs')
+    if files:
+        for f in files:
+            os.remove(os.path.join(app.config["PETTY_CASH_LOGS"], f))
+    
+    return redirect('/')
+        
+
+   
     
 if __name__ == '__main__':
     app.run(debug=True)
