@@ -36,6 +36,18 @@ app.config["PETTY_CASH_LOGS"] = "C:/Users/Remco/tmt/team-wilson-website/static/l
 @app.route('/')
 def index():
 
+    return render_template('index.html')
+
+
+@app.route('/petty_cash')
+def petty_cash():
+    
+    # remove any previously downloaded logs
+    log_files = os.listdir('static/logs')
+    if log_files:
+        for log in log_files:
+            os.remove(os.path.join(app.config["PETTY_CASH_LOGS"], log))
+
     session = Session(engine)
 
     form_data = session.query(pettyCash)
@@ -122,18 +134,7 @@ def download():
                 )
         except FileNotFoundError:
             abort(404)
-
-@app.route('/test')
-def test():
-    files = os.listdir('static/logs')
-    if files:
-        for f in files:
-            os.remove(os.path.join(app.config["PETTY_CASH_LOGS"], f))
-    
-    return redirect('/')
-        
-
-   
+  
     
 if __name__ == '__main__':
     app.run(debug=True)

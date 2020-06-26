@@ -13,8 +13,15 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="../static/js/form.js"></script>
+  <script src="../static/js/petty-cash.js"></script>
 
+  <style>
+  body { background-color: lightgrey;
+    background-position: center;
+    background-size: cover;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+  </style>
 </head>
 
 <body>
@@ -27,7 +34,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Performance</a>
@@ -60,7 +67,7 @@
     </div>
   </nav>
 
-  <div class="container-fluid wrapper" style="margin-top:0px;">
+  <div class="container-fluid" style="margin-top:0px;">
     
     <div class=row-md-6>
       <br>
@@ -74,22 +81,36 @@
       <!-- <p>{{form}}</p> -->
       <br><br><br>  
     </div>
-    <div class='row-md-12 '>
-      <form id="filterTrans" class="form-inline justify-content-center" style="margin-bottom: 1%;">
-        <!-- <div class='col-md-8 list-group-item'></div> -->
-        <div class="form-group">
-          <label class="control-label col-sm-2">From</label>
-          <input id="fromDate" type="text" class="datepicker form-control">
-        </div>
-        <div class="form-group">
-          <label class="control-label col-sm-2">To</label>
-          <input id="toDate" type="text" class="datepicker form-control">
-        </div>
-        
-        <button type='submit' class="btn btn-light filter-btn">Filter</button>
-        <a href="/download">Test</a>
-      </form>
+  </div>
+
+  <div class="container-fluid">
+    <div class='row justify-content-between'>
+      <div class="col-md-7 my-auto" style="margin-left: 10%;">
+        <form id="filterTrans" class="form-inline justify-content-center">
+          <!-- <div class='col-md-8 list-group-item'></div> -->
+          <div class="form-group">
+            <label class="control-label filter-space">From</label>
+            <input id="fromDate" type="text" class="form-control datepicker filter-space">
+          </div>
+          <div class="form-group">
+            <label class="control-label filter-space">To</label>
+            <input id="toDate" type="text" class="form-control datepicker filter-space">
+          </div>
+          
+          <button type='submit' class="btn btn-primary btn-md filter-btn export_img">Filter</button>
+          
+            
+          
+          
+        </form>
+      </div>
+      <div class="col-md-1" style='margin-right: 1%;'>
+        <a href="/download">
+          <img class="export_img" src="static/images/export_excel.png">
+        </a>
+      </div>
     </div>
+  </div>
 
     <div class="row margin-top-50 justify-content-md-center">
       <div class="col-md-2">
@@ -145,9 +166,7 @@
                   <br><br>
 
                 </form>
-                <p id="successAlert" class="alert alert-success" role="alert"></p>
-                <p id="errorAlert" class="alert alert-danger" role="alert"></p>
-                <br>
+                
               </div>
           
           </aside>

@@ -1,8 +1,3 @@
-
-
-.wrapper {
-    background-color: lightgrey;
-  }
   
   .brand-logo {
     max-height: 200px;
@@ -39,10 +34,12 @@
   width: 45%
 }
 
+.filter-space {
+  margin-right: 5px;
+}
 
-
-.filter-btn {
-
-  width: 20%;
-  margin-left: 10%;
+.export_img {
+  max-width: auto;
+  max-height: 70px;
+  padding: 0%;
 }

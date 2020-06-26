@@ -36,4 +36,8 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.export_img {
+  width: 20px;
+  height: 20px;
+}
 
