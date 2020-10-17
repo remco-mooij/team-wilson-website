@@ -3,12 +3,7 @@
   background-color:lightgrey;
 }
 
-.wilson {
-  background-color: white;
-  margin: 0%;
-  padding: 0%;
-  margin: 0px;
-}
+
 
 #jumbo {
   margin: 0px;
@@ -25,16 +20,22 @@
 
 }
 
-.jumbotron {
+.home {
+  /* position: relative; */
   margin: 0px 0px 0px 0px;
-  margin-bottom: 0%;
   padding: 0%;
-  height: 500px;
+  height: 600px;
   width: 100%;
   background-image: url('../images/tmt-raleigh.jpg');
   background-position-y: 65%;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.home-text {
+  position: relative;
+  color: white;
+  margin-top: 12%;
 }
 .export_img {
   width: 20px;
