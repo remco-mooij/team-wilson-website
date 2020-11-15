@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-  
+
   <title>Team Wilson</title>
 </head>
 <body class="body">
@@ -16,7 +16,7 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
@@ -49,12 +49,15 @@
         <ul class="navbar-nav">
           {% if current_user.is_authenticated %}
             <li class="nav-item active">
+              <a class="nav-link" href="{{ url_for('enter_new_hire') }}">New Hires</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="{{ url_for('account') }}">Account</a>
             </li>
-          {% else %}          
+          {% else %}
             <li class="nav-item active">
               <a class="nav-link" href="{{ url_for('login') }}">Login</a>
             </li>
@@ -66,9 +69,9 @@
       </div>
     </div>
   </nav>
-    
-    
-  
+
+
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -80,7 +83,7 @@
   {% endwith %}
 
   {% block content %}{% endblock %}
-     
+
   <footer class="footer" style="text-align:center;padding: 0.5%;">
     <span class="bottom">Two Men and a Truck - Team Wilson</span>
     <br>

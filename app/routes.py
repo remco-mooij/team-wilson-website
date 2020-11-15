@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from app import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from app.models import User
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewHireForm
+from app.models import User, NewHire
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
@@ -80,6 +80,21 @@ def account():
     form.email.data = current_user.email
   image_file = url_for('static', filename='users/profile_pics/' + current_user.image_file)
   return render_template('account.html', form=form, image_file=image_file)
+
+@app.route("/enter_new_hire", methods=['GET', 'POST'])
+@login_required
+def enter_new_hire():
+    form = NewHireForm()
+    if form.validate_on_submit():
+        newhire = NewHire(first_name=form.first_name.data, last_name=form.last_name.data,\
+                            position=form.position.data, pay_rate=form.pay_rate.data,\
+                            hire_date=form.hire_date.data, start_date=form.start_date.data,\
+                            wisely_no=form.wisely_no.data, user=current_user)
+        db.session.add(newhire)
+        db.session.commit()
+        flash('New hire was entered successfully!', 'success')
+        # return(redirect(url_for('new_hires'))
+    return render_template('enter_new_hire.html', form=form)
 
 @app.route("/petty_cash")
 def petty_cash():
