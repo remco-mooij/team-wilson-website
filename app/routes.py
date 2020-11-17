@@ -81,6 +81,11 @@ def account():
   image_file = url_for('static', filename='users/profile_pics/' + current_user.image_file)
   return render_template('account.html', form=form, image_file=image_file)
 
+@app.route("/new_hires")
+def new_hires():
+    new_hires = NewHire.query.all()
+    return render_template('new_hires.html', new_hires=new_hires)
+
 @app.route("/enter_new_hire", methods=['GET', 'POST'])
 @login_required
 def enter_new_hire():

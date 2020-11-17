@@ -7,8 +7,12 @@
   border-bottom: black;
 }
 
-nav .container-fluid {
+.container-fluid {
   max-width: 80%;
+}
+
+.home-page {
+  max-width: 100%;
 }
 
 #jumbo {
@@ -60,4 +64,45 @@ fieldset {
   width: 100px;
   margin-right: 20px;
   margin-bottom: 16px;
+}
+
+.whitespace {
+  margin-top: 25px;
+}
+.newhire-container {
+  background-color: white;
+  margin: 25px 25px 25px 0px;
+  padding: 5px 25px 5px 15px;
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+}
+
+.newhire-img {
+  height: 40px;
+  width: 40px;
+}
+
+.newhire-metadata {
+  margin-top: 7.5px;
+}
+
+.collapse-icon {
+  cursor: pointer;
+}
+
+.newhire-line {
+  margin-top: 0px;
+}
+
+.newhire-header {
+  font-size: 24px;
+}
+
+.newhire-info {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.newhire-info-header {
+  font-weight: 300;
 }
