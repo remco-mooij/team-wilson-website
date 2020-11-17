@@ -1,16 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-
-  <!-- <style>
-  body { background-color: lightgrey;
-    background-position: center;
-    background-size: cover;
-    font-family: 'Roboto Condensed', sans-serif;
-  }
-  </style> -->
-
-
-  <div class="container-fluid" style="margin-top:0px;">
+  <div class="container-fluid">
     
     <div class=row-md-6>
       <br>
@@ -27,7 +17,7 @@
   </div>
 
   <div class="container-fluid">
-    <div class='row justify-content-between'>
+    <div class="row">
       <div class="col-md-7 my-auto" style="margin-left: 10%;">
         <form id="filterTrans" class="form-inline justify-content-center">
           <!-- <div class='col-md-8 list-group-item'></div> -->
@@ -55,95 +45,163 @@
     </div>
   </div>
 
-    <div class="row margin-top-50 justify-content-md-center">
-      <div class="col-md-2">
-        <aside class="filters">
-    
-        
-          
-          <div class="panel panel-default">
-            <div class="panel-heading forms-panel">Enter Transaction</div>
-              <div class="panel-body">
-                <form id="enterTrans">
-                  <div class="list-group-item">
-                    <label for="name">Date*</label>
-                    <input id="datepicker" class="datepicker form-control" type='text' name="">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="pettycash-form">
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">New Hire</legend>
+              <div class="form-group">
+                {{ form.date.label() }}
+                {% if form.date.errors %}
+                  {{ form.date(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.date.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
                   </div>
-                  <div class="list-group-item">
-                    <label for="customer-id">Receipt Number*</label>
-                    <input class="form-control" id="receiptNumber" type="text" name=expReceipt value="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="customer-id">Description*</label>
-                    <input class="form-control" id="description" type="text" name=expDescr value="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="sales-order">Amount Deposited</label>
-                    <input class="form-control" id="depAmount" type="text" name=expAmountDep value="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="sales-order">Amount Withdrawn</label>
-                    <input class="form-control" id="withAmount" type="text" name=expAmountWith value="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="sales-order">Received By*</label>
-                    <input class="form-control" id="receivedBy" type="text" name=expReceived value="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="sales-order">Approved By*</label>
-                    <input class="form-control" id="approvedBy" type="text" name=expApproved value ="">
-                  </div>
-                  <div class="list-group-item">
-                    <label for="sales-order">Comments</label>
-                    <input class="form-control" id="comments" type="text" name=expComments value="">                   
-                  </div>
-               
-                
-                    <p class style=>* Required field</p>
-             
-                  
-                  
-             
-                  <!-- <button id="submit-btn" type="button" class="btn btn-light add-btn">Add</button> -->
-                  <button id="submit-btn" type="submit" class="btn btn-light submit-btn">Submit</button>
-                  <br><br>
-
-                </form>
-                
+                {% else %}
+                  {{ form.date(class="form-control form-control-lg") }}
+                {% endif %}
               </div>
-          
-          </aside>
-        </div>
-        <div class="col-md-9">
-          <div id="table-area" class="">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <col width="10%">
-                  <col width="10%">
-                  <col width="20%">
-                  <col width="10%">
-                  <col width="10%">
-                  <col width="15%">
-                  <col width="15%">
-                  <col width="20%">
-                  <th class="table-head">Date</th>
-                  <th class="table-head">Receipt #</th>
-                  <th class="table-head">Description</th>
-                  <th class="table-head">Amount Deposited</th>
-                  <th class="table-head">Amount Withdrawn</th>
-                  <th class="table-head">Received By</th>
-                  <th class="table-head">Approved By</th>
-                  <th class="table-head">Comments</th>
-                </tr>
-              </thead>
-              <tbody id='tbody'></tbody>
-            </table>
-          </div>
+              <div class="form-group">
+                {{ form.receipt_no.label() }}
+                {% if form.receipt_no.errors %}
+                  {{ form.receipt_no(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.receipt_no.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.receipt_no(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.description.label() }}
+                {% if form.description.errors %}
+                  {{ form.description(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.description(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.amount_deposited.label() }}
+                {% if form.amount_deposited.errors %}
+                  {{ form.amount_deposited(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.amount_deposited.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.amount_deposited(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.amount_withdrawn.label() }}
+                {% if form.amount_withdrawn.errors %}
+                  {{ form.amount_withdrawn(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.amount_withdrawn.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.amount_withdrawn(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.received_by.label() }}
+                {% if form.received_by.errors %}
+                  {{ form.received_by(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.received_by.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.received_by(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.approved_by.label() }}
+                {% if form.approved_by.errors %}
+                  {{ form.approved_by(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.approved_by.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.approved_by(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.comments.label() }}
+                {% if form.comments.errors %}
+                  {{ form.comments(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.comments.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.comments(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+            </fieldset>
+            <div class="form-group">
+              {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+          </form>
+          <p class style=>* Required field</p>
+        </div>        
+      </div>
+
+      <div class="col-md-9">
+        <div id="table-area" class="">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <col width="10%">
+                <col width="10%">
+                <col width="20%">
+                <col width="10%">
+                <col width="10%">
+                <col width="15%">
+                <col width="15%">
+                <col width="20%">
+                <th class="table-head">Date</th>
+                <th class="table-head">Receipt #</th>
+                <th class="table-head">Description</th>
+                <th class="table-head">Amount Deposited</th>
+                <th class="table-head">Amount Withdrawn</th>
+                <th class="table-head">Received By</th>
+                <th class="table-head">Approved By</th>
+                <th class="table-head">Comments</th>
+              </tr>
+            </thead>
+            <tbody id='tbody'></tbody>
+          </table>
         </div>
       </div>
     </div>
-    
   </div>
+     
+
+                  
+                  
+             
+
+      
+  
 
 {% endblock content %}

@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
   image_file = db.Column(db.String(20), nullable=False, default='default.png')
   password = db.Column(db.String(60), nullable=False)
   newhires = db.relationship('NewHire', backref='user', lazy=True)
+  pettycash_entries = db.relationship('PettyCashExp', backref='user', lazy=True)
 
   def __repr__(self):
     return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -33,3 +34,22 @@ class NewHire(db.Model):
     return f"NewHire('{self.first_name}', '{self.last_name}', '{self.position}',\
                         '{self.pay_rate}', '{self.hire_date}', '{self.start_date}'\
                         '{self.wisely_no}', '{self.date_entered}')"
+
+class PettyCashExp(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  date = db.Column(db.Date, nullable=False)
+  receipt_no = db.Column(db.Integer, nullable=False)
+  description = db.Column(db.String(200), nullable=False)
+  amount_deposited = db.Column(db.Float)
+  amount_withdrawn = db.Column(db.Float)
+  received_by = db.Column(db.String(50), nullable=False)
+  approved_by = db.Column(db.String(200), nullable=False)
+  comments = db.Column(db.String(200))
+  date_entered = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+  def __repr__(self):
+    return f"PettyCashExp('{self.date}', '{self.receipt_no}', '{self.description}',\
+                        '{self.amount_deposited}', '{self.amount_withdrawn}',\
+                        '{self.received_by}', '{self.approved_by}',\
+                        '{self.comments}', '{self.date_entered}')"

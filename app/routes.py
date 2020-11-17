@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from app import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewHireForm
-from app.models import User, NewHire
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewHireForm, PettyCashForm
+from app.models import User, NewHire, PettyCashExp
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
@@ -83,24 +83,33 @@ def account():
 
 @app.route("/new_hires")
 def new_hires():
-    new_hires = NewHire.query.all()
-    return render_template('new_hires.html', new_hires=new_hires)
+  new_hires = NewHire.query.all()
+  return render_template('new_hires.html', new_hires=new_hires)
 
 @app.route("/enter_new_hire", methods=['GET', 'POST'])
 @login_required
 def enter_new_hire():
-    form = NewHireForm()
-    if form.validate_on_submit():
-        newhire = NewHire(first_name=form.first_name.data, last_name=form.last_name.data,\
-                            position=form.position.data, pay_rate=form.pay_rate.data,\
-                            hire_date=form.hire_date.data, start_date=form.start_date.data,\
-                            wisely_no=form.wisely_no.data, user=current_user)
-        db.session.add(newhire)
-        db.session.commit()
-        flash('New hire was entered successfully!', 'success')
-        # return(redirect(url_for('new_hires'))
-    return render_template('enter_new_hire.html', form=form)
+  form = NewHireForm()
+  if form.validate_on_submit():
+      newhire = NewHire(first_name=form.first_name.data, last_name=form.last_name.data,\
+                          position=form.position.data, pay_rate=form.pay_rate.data,\
+                          hire_date=form.hire_date.data, start_date=form.start_date.data,\
+                          wisely_no=form.wisely_no.data, user=current_user)
+      db.session.add(newhire)
+      db.session.commit()
+      flash('New hire was entered successfully!', 'success')
+      return redirect(url_for('new_hires'))
+  return render_template('enter_new_hire.html', form=form)
 
-@app.route("/petty_cash")
+@app.route("/petty_cash", methods=['GET', 'POST'])
 def petty_cash():
-  return render_template("petty_cash.html")
+  form = PettyCashForm()
+  if form.validate_on_submit():
+    pettycash_exp = PettyCashExp(date=form.date.data, receipt_no=form.receipt_no.data,\
+                                  description=form.description.data, amount_deposited=form.amount_deposited.data,\
+                                  amount_withdrawn=form.amount_withdrawn.data, received_by=form.received_by.data,\
+                                  approved_by=form.approved_by.data, comments=form.comments.data, user=current_user)
+    db.session.add(pettycash_exp)
+    db.session.commit()
+    return redirect(url_for('petty_cash'))
+  return render_template("petty_cash.html", form=form)

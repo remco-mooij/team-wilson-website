@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, DateField, IntegerField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from app.models import User
 
 class RegistrationForm(FlaskForm):
@@ -55,3 +55,15 @@ class NewHireForm(FlaskForm):
   start_date = DateField('Start Date', validators=[DataRequired()])
   wisely_no = IntegerField('Wisely Number', validators=[DataRequired()])
   submit = SubmitField('Submit')
+
+class PettyCashForm(FlaskForm):
+  date = DateField('Date', validators=[DataRequired()])
+  receipt_no = IntegerField('Receipt Number', validators=[DataRequired()])
+  description = StringField('Description', validators=[DataRequired()])
+  amount_deposited = FloatField('Amount Deposited', validators=[Optional()])
+  amount_withdrawn = FloatField('Amount Withdrawn', validators=[Optional()])
+  received_by = StringField('Received By', validators=[DataRequired()])
+  approved_by = StringField('Approved By', validators=[DataRequired()])
+  comments = StringField('Comments')
+  submit = SubmitField('Submit')
+
