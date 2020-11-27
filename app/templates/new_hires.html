@@ -18,27 +18,33 @@
               </div>              
               <div class="clearfix"></div>
               <hr class="newhire-line">
-              <div class="float-left"><h3 class="newhire-header">{{ new_hire.first_name }} {{ new_hire.last_name }}</a></h3></div>
-              <div class="float-right"><h3 class="newhire-header">{{ new_hire.position }}</a></h3></div>
-              <div class="clearfix"></div>
-              <div id="newhire-info-{{ new_hire.id }}" class="newhire-info collapse">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h5 class="newhire-info-header">Hire Date</h5>
-                    <h5>{{ new_hire.hire_date }}</h5>
-                    <br>
-                    <h5 class="newhire-info-header">Start Date</h5>
-                    <h5>{{ new_hire.start_date }}</h5>
+              <div id="newhire-panel-{{ new_hire.id }}">
+                <div class="float-left"><h3 class="newhire-header">{{ new_hire.first_name }} {{ new_hire.last_name }}</a></h3></div>
+                <div class="float-right"><h3 class="newhire-header">{{ new_hire.position }}</a></h3></div>
+                <div class="clearfix"></div>                           
+                <div id="newhire-info-{{ new_hire.id }}" class="newhire-info collapse">               
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h5 class="newhire-info-header">Hire Date</h5>
+                      <h5>{{ new_hire.hire_date }}</h5>
+                      <br>
+                      <h5 class="newhire-info-header">Start Date</h5>
+                      <h5>{{ new_hire.start_date }}</h5>
+                    </div>
+                    <div class="col-md-6">
+                      <h5 class="newhire-info-header">Pay Rate</h5>
+                      <h5>{{ new_hire.pay_rate }}</h5>
+                      <br>
+                      <h5 class="newhire-info-header">Wisely Number</h5>
+                      <h5>{{ new_hire.wisely_no }}</h5>
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <h5 class="newhire-info-header">Pay Rate</h5>
-                    <h5>{{ new_hire.pay_rate }}</h5>
-                    <br>
-                    <h5 class="newhire-info-header">Wisely Number</h5>
-                    <h5>{{ new_hire.wisely_no }}</h5>
-                  </div>
+                  <script type="text/javascript" src="static/js/new-hires.js"></script>
+                  <script>
+                    CollapseNewHire('#newhire-panel-{{ new_hire.id }}', '#newhire-info-{{ new_hire.id }}')
+                  </script>
                 </div>
-              </div>
+              </div> 
             </div>
           </article>
         {% endfor %}
@@ -46,4 +52,7 @@
       </div>
     </div>
   </div>
+  
+  
+  
 {% endblock content %}

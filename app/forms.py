@@ -59,7 +59,7 @@ class NewHireForm(FlaskForm):
 class PettyCashForm(FlaskForm):
   date = DateField('Date', validators=[DataRequired()])
   receipt_no = IntegerField('Receipt Number', validators=[DataRequired()])
-  description = StringField('Description', validators=[DataRequired()])
+  description = StringField('Description', validators=[DataRequired(), Length(min=5, max=40)])
   amount_deposited = FloatField('Amount Deposited', validators=[Optional()])
   amount_withdrawn = FloatField('Amount Withdrawn', validators=[Optional()])
   received_by = StringField('Received By', validators=[DataRequired()])

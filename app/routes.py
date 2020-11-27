@@ -2,7 +2,7 @@ import os
 import secrets
 from PIL import Image
 from app import app, db, bcrypt
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, jsonify
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewHireForm, PettyCashForm
 from app.models import User, NewHire, PettyCashExp
 from flask_login import login_user, current_user, logout_user, login_required
@@ -101,8 +101,13 @@ def enter_new_hire():
       return redirect(url_for('new_hires'))
   return render_template('enter_new_hire.html', form=form)
 
-@app.route("/petty_cash", methods=['GET', 'POST'])
+@app.route("/petty_cash")
 def petty_cash():
+  form = PettyCashForm()
+  return render_template("petty_cash.html", form=form)
+
+@app.route("/petty_cash/submit", methods=['POST'])
+def petty_cash_submit():
   form = PettyCashForm()
   if form.validate_on_submit():
     pettycash_exp = PettyCashExp(date=form.date.data, receipt_no=form.receipt_no.data,\
@@ -111,5 +116,23 @@ def petty_cash():
                                   approved_by=form.approved_by.data, comments=form.comments.data, user=current_user)
     db.session.add(pettycash_exp)
     db.session.commit()
-    return redirect(url_for('petty_cash'))
-  return render_template("petty_cash.html", form=form)
+    # add database id to object to be returned
+    id = pettycash_exp.id
+    form_data = form.data
+    form_data['id'] = id
+    print(form_data)
+    return jsonify(form_data)
+  return jsonify(errors=form.errors)
+
+@app.route("/petty_cash/table_change", methods=['POST'])
+def petty_cash_table_change():
+  form = PettyCashForm()
+  
+  field = request.form['field']
+  value = request.form['value']
+
+
+  print(form.receipt_no.name)
+  
+
+  return jsonify({'data': value})

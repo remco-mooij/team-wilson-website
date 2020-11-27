@@ -8,7 +8,7 @@
 }
 
 .container-fluid {
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .home-page {
@@ -66,6 +66,9 @@ fieldset {
   margin-bottom: 16px;
 }
 
+
+/* New Hire Page */
+
 .whitespace {
   margin-top: 25px;
 }
@@ -107,11 +110,55 @@ fieldset {
   font-weight: 300;
 }
 
+
+/* Petty Cash Page */
+
 .pettycash-form {
   background-color: white;
-  margin: 50px 0px 50px 25px;
+  margin: 50px 0px 50px 50px;
   padding: 25px;
   border: 1px solid #cacaca;
   border-radius: 3px;
-
+  font-size: 14px;
+  width: 110%;
 }
+
+.pettycash-form legend {
+  font-size: 18px;
+}
+
+.pettycash-table {
+  margin: 50px 50px 0px 75px;
+}
+
+.pettycash-table thead th {
+  height: 5px;
+  vertical-align: middle;
+  font-weight: 500;
+  padding: 5px 15px 5px 15px;
+}
+
+thead {
+  background-color: white;
+}
+
+.pettycash-table .table-border {
+  border-right: 2px solid #eeeeee;
+}
+
+.pettycash-entry td {
+  border-right: 2px solid #eeeeee;
+}
+
+th.date, th.amount_deposited, th.amount_withdrawn, th.received_by, th.approved_by {
+  width: 10%;
+}
+
+th.receipt_no {
+  width: 9%;
+}
+
+th.description {
+  width: 20%;
+}
+
