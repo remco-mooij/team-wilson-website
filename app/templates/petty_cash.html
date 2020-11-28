@@ -7,46 +7,45 @@
       <br>
       <h1 class="text-center">Petty Cash</h1>
 
-      <!-- <p> Enter Transactions</p>
-      {% for form in form_data %}
-      <p> {{form.date}} </p>
-      {% endfor %} -->
-
-      <!-- <p>{{form}}</p> -->
       <br><br><br>  
     </div>
   </div>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-7 my-auto" style="margin-left: 10%;">
-        <form id="filterTrans" class="form-inline justify-content-center">
-          <!-- <div class='col-md-8 list-group-item'></div> -->
-          <div class="form-group">
-            <label class="control-label filter-space">From</label>
-            <input id="fromDate" type="text" class="form-control datepicker filter-space">
+
+  <div class="container-fluid container-pettycash">
+    <div class="row justify-content-between">
+      <div class="col-md-8 offset-md-3">
+        <form id="filterExp">
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label>Start Date</label>
+              <input id="fromDate" type="text" class="form-control datepicker">
+            </div>
+            <div class="form-group col-md-2">
+              <label>End Date</label>
+              <input id="toDate" type="text" class="form-control datepicker">
+            </div>
+            <div class="form-group">
+              <label for="">&nbsp;</label>
+              <button class="form-control btn btn-outline-secondary">Filter</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="control-label filter-space">To</label>
-            <input id="toDate" type="text" class="form-control datepicker filter-space">
-          </div>
-          
-          <button type='submit' class="btn btn-primary btn-md filter-btn export_img">Filter</button>
-          
-            
-          
-          
         </form>
       </div>
-      <div class="col-md-1" style='margin-right: 1%;'>
+        
+      <div class="col-md-1">
         <a href="/download">
           <img class="export_img" src="static/images/export_excel.png">
-        </a>
+        </a> 
       </div>
+      
     </div>
-  </div>
+    <hr>  
+  </div>      
+  
+  
 
-  <div class="container-fluid">
+  <div class="container-fluid container-pettycash">
     <div class="row">
       <div class="col-md-2">
         <div class="pettycash-form">
@@ -130,14 +129,14 @@
               // if form is validated, add table row
               else {
                 var tbody = $('#tbody');
-                var row = $('<tr>');
+                var row = $(`<tr id="${data.id}">`);
 
                 Object.entries(data).slice(0, 8).forEach(function([key, value], index) {
                   if (value === null) {
                     var cell = ('<td></td>');
                   }
                   else {
-                    // dynamically create id with row and col number
+                    // dynamically create id with form field name
                     var cell = (`<td id="${key}" contenteditable="True">${value}</td>`);
                   };
                   row.append(cell);       
@@ -145,15 +144,19 @@
                 $(row).addClass("pettycash-entry")
                 tbody.append(row);
 
-                
+                // when value in table is changed, do another AJAX call to update in database
                 $('td').on('blur', function() {
-                  id = $(this).attr('id');
+                  expenseId = $(this).parent('tr').attr('id');
+                  field = $(this).attr('id');
                   value = $(this).text();
-                  var tableChange = {field: id, value: value}
                   $.ajax({
                     type: "POST",
                     url: "{{ url_for('petty_cash_table_change') }}",
-                    data: tableChange
+                    data: {
+                      id: expenseId,
+                      field: field,
+                      value: value
+                    }
                   })
                   .done(function(data) {
                     console.log(data);
@@ -174,9 +177,7 @@
                 }
             }
           });
-        });
-
-        
+        });        
       </script>
       
       <div class="col-md-10">

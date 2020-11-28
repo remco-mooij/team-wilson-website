@@ -128,11 +128,12 @@ def petty_cash_submit():
 def petty_cash_table_change():
   form = PettyCashForm()
   
+  id = request.form['id']
   field = request.form['field']
   value = request.form['value']
 
-
-  print(form.receipt_no.name)
-  
+  pettycashexp = PettyCashExp.query.filter_by(id=id).first()
+  pettycashexp.field = value
+  db.session.commit()  
 
   return jsonify({'data': value})
