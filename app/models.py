@@ -1,5 +1,5 @@
 from datetime import datetime
-from app import db, login_manager
+from app import db, login_manager, ma
 from flask_login import UserMixin
 
 @login_manager.user_loader
@@ -45,11 +45,15 @@ class PettyCashExp(db.Model):
   received_by = db.Column(db.String(50), nullable=False)
   approved_by = db.Column(db.String(200), nullable=False)
   comments = db.Column(db.String(200))
+  receipt = db.Column(db.String(20))
   date_entered = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+  
   def __repr__(self):
-    return f"PettyCashExp('{self.date}', '{self.receipt_no}', '{self.description}',\
-                        '{self.amount_deposited}', '{self.amount_withdrawn}',\
-                        '{self.received_by}', '{self.approved_by}',\
-                        '{self.comments}', '{self.date_entered}')"
+    return f"PettyCashExp('{self.date}', '{self.receipt_no}', '{self.description}', '{self.amount_deposited}', '{self.amount_withdrawn}', '{self.received_by}', '{self.approved_by}', '{self.comments}', '{self.date_entered}')"
+
+class PettyCashExpSchema(ma.Schema):
+  class Meta:
+    fields = ('id', 'date', 'receipt_no', 'description', 'amount_deposited', 'amount_withdrawn', 'received_by', 'approved_by', 'comments')
+    ordered = True

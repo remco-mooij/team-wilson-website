@@ -11,6 +11,10 @@
   max-width: 100%;
 }
 
+.form-sm {
+  height: 40px;
+}
+
 .home-page {
   max-width: 100%;
 }
@@ -65,6 +69,9 @@ fieldset {
 
 /* New Hire Page */
 
+.container-newhires {
+  max-width: 90%;
+}
 .whitespace {
   margin-top: 25px;
 }
@@ -77,20 +84,35 @@ fieldset {
 }
 
 .newhire-img {
+  margin-top: 5px;
   height: 40px;
   width: 40px;
 }
 
 .newhire-metadata {
   margin-top: 7.5px;
+  margin-left: 10px;
 }
 
-.collapse-icon {
+.newhire-checkmark {
+  font-size: 20px;
+  font-weight: bolder;
+  color: rgb(0, 114, 6);
   cursor: pointer;
+  text-align: justify;
+}
+
+.newhire-checkmark:hover {
+  color: rgb(0, 114, 6);
 }
 
 .newhire-line {
   margin-top: 0px;
+  margin-left: 10px;
+}
+
+.newhire-panel {
+  margin-left: 10px;
 }
 
 .newhire-header {
@@ -106,6 +128,13 @@ fieldset {
   font-weight: 300;
 }
 
+.newhire-settings {
+  background-color: white;
+  margin: 50px 25px 50px 25px;
+  padding: 20px 25px 25px 25px;
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+}
 
 /* Petty Cash Page */
 
@@ -113,8 +142,9 @@ fieldset {
   max-width: 93%;
 }
 
+
 .form-row {
-  width: 100%;
+  width: 100  %;
 }
 
 .pettycash-form {
@@ -166,9 +196,21 @@ th.description {
   width: 20%;
 }
 
-.export_img {
+.filter-btn {
+  margin-left: 10px;
+}
+
+.filter-btn label {
+  display: block;
+}
+
+.export-img {
   margin: 35px 0px 0px 20px;
   width: 40px;
   height: 40px;
   display: inline;
+}
+
+.filter-form {
+  margin-bottom: 0rem;
 }

@@ -64,27 +64,27 @@
               <div class="form-group">
                 {{ form.hire_date.label() }}
                 {% if form.hire_date.errors %}
-                  {{ form.hire_date(class="form-control form-control-lg is-invalid") }}
+                  {{ form.hire_date(class="form-control form-control-lg is-invalid datepicker") }}
                   <div class="invalid-feedback">
                     {% for error in form.hire_date.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                   </div>
                 {% else %}
-                  {{ form.hire_date(class="form-control form-control-lg") }}
+                  {{ form.hire_date(class="form-control form-control-lg datepicker") }}
                 {% endif %}
               </div>
               <div class="form-group">
                 {{ form.start_date.label() }}
                 {% if form.start_date.errors %}
-                  {{ form.start_date(class="form-control form-control-lg is-invalid") }}
+                  {{ form.start_date(class="form-control form-control-lg is-invalid datepicker") }}
                   <div class="invalid-feedback">
                     {% for error in form.start_date.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                   </div>
                 {% else %}
-                  {{ form.start_date(class="form-control form-control-lg") }}
+                  {{ form.start_date(class="form-control form-control-lg datepicker") }}
                 {% endif %}
               </div>
               <div class="form-group">

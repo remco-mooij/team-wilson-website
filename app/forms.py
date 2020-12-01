@@ -51,13 +51,18 @@ class NewHireForm(FlaskForm):
   last_name = StringField('Last Name', validators=[DataRequired()])
   position = StringField('Position', validators=[DataRequired()])
   pay_rate = FloatField('Pay Rate', validators=[DataRequired()])
-  hire_date = DateField('Hire Date', validators=[DataRequired()])
-  start_date = DateField('Start Date', validators=[DataRequired()])
+  hire_date = DateField('Hire Date', format='%m/%d/%Y', validators=[DataRequired()])
+  start_date = DateField('Start Date', format='%m/%d/%Y', validators=[DataRequired()])
   wisely_no = IntegerField('Wisely Number', validators=[DataRequired()])
   submit = SubmitField('Submit')
 
+class NewHireFilterForm(FlaskForm):
+  from_date = DateField('From Date', format='%m/%d/%Y')
+  to_date =  DateField('To Date', format='%m/%d/%Y')
+  submit = SubmitField('Filter')
+
 class PettyCashForm(FlaskForm):
-  date = DateField('Date', validators=[DataRequired()])
+  date = DateField('Date', format='%m/%d/%Y', validators=[DataRequired()])
   receipt_no = IntegerField('Receipt Number', validators=[DataRequired()])
   description = StringField('Description', validators=[DataRequired(), Length(min=5, max=40)])
   amount_deposited = FloatField('Amount Deposited', validators=[Optional()])
@@ -65,5 +70,10 @@ class PettyCashForm(FlaskForm):
   received_by = StringField('Received By', validators=[DataRequired()])
   approved_by = StringField('Approved By', validators=[DataRequired()])
   comments = StringField('Comments')
+  receipt = FileField('Upload Receipt', validators=[FileAllowed(['pdf', 'jpg', 'png'])])
   submit = SubmitField('Submit')
 
+class PettyCashFilterForm(FlaskForm):
+  from_date = DateField('From Date', format='%m/%d/%Y')
+  to_date =  DateField('To Date', format='%m/%d/%Y')
+  submit = SubmitField('Filter')

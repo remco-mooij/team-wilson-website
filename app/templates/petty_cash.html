@@ -1,43 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
-
-  <div class="container-fluid">
+  <br><br>
+  <div class="container-fluid container-pettycash">    
+    <div class="row">
+      <div class="col-md-3"> 
+        
+        
+         
+      </div>
     
-    <div class=row-md-6>
-      <br>
-      <h1 class="text-center">Petty Cash</h1>
-
-      <br><br><br>  
     </div>
   </div>
+  <br><br><br> 
 
 
   <div class="container-fluid container-pettycash">
     <div class="row justify-content-between">
       <div class="col-md-8 offset-md-3">
         <form id="filterExp">
+          {{ filter_form.hidden_tag() }}
           <div class="form-row">
-            <div class="form-group col-md-2">
-              <label>Start Date</label>
-              <input id="fromDate" type="text" class="form-control datepicker">
+            <div class="form-group col-md-2 filter-form">
+              {{ filter_form.from_date.label() }}
+              {{ filter_form.from_date(class="form-control form-control-lg form-sm datepicker") }}
+              <div id="from_date-error" class="invalid-feedback"></div>
             </div>
-            <div class="form-group col-md-2">
-              <label>End Date</label>
-              <input id="toDate" type="text" class="form-control datepicker">
+            <div class="form-group col-md-2 filter-form">
+              {{ filter_form.to_date.label() }}
+              {{ filter_form.to_date(class="form-control form-control-lg form-sm datepicker") }}
+              <div id="to_date-error" class="invalid-feedback"></div>
             </div>
-            <div class="form-group">
-              <label for="">&nbsp;</label>
-              <button class="form-control btn btn-outline-secondary">Filter</button>
+            <div class="form-group filter-btn filter-form">
+              <label>&nbsp;</label>
+              {{ filter_form.submit(class="btn btn-outline-info ") }}
             </div>
           </div>
         </form>
       </div>
-        
       <div class="col-md-1">
-        <a href="/download">
-          <img class="export_img" src="static/images/export_excel.png">
+        <a href="{{ url_for('petty_cash_download') }}">
+          <img class="export-img" src="static/images/export_excel.png">
         </a> 
       </div>
+      
       
     </div>
     <hr>  
@@ -49,56 +54,59 @@
     <div class="row">
       <div class="col-md-2">
         <div class="pettycash-form">
-          <form id="form" method="POST" action="">
+          <form id="enterExp" method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div id="csrf_token-error" class="text-danger my-2"></div>
             <fieldset class="form-group">
               <legend class="border-bottom mb-4">Enter Transaction</legend>
               <div class="form-group">
                 {{ form.date.label() }}
-                {{ form.date(class="form-control form-control-lg") }}
+                {{ form.date(class="form-control form-control-lg form-sm datepicker") }}
                 <div id="date-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.receipt_no.label() }}
-                {{ form.receipt_no(class="form-control form-control-lg") }}
+                {{ form.receipt_no(class="form-control form-control-lg form-sm") }}
                 <div id="receipt_no-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.description.label() }}
-                {{ form.description(class="form-control form-control-lg") }}
+                {{ form.description(class="form-control form-control-lg form-sm") }}
                 <div id="description-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.amount_deposited.label() }}
-                {{ form.amount_deposited(class="form-control form-control-lg") }}
+                {{ form.amount_deposited(class="form-control form-control-lg form-sm") }}
                 <div id="amount_deposited-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.amount_withdrawn.label() }}
-                {{ form.amount_withdrawn(class="form-control form-control-lg") }}
+                {{ form.amount_withdrawn(class="form-control form-control-lg form-sm") }}
                 <div id="amount_withdrawn-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.received_by.label() }}
-                {{ form.received_by(class="form-control form-control-lg") }}
+                {{ form.received_by(class="form-control form-control-lg form-sm") }}
                 <div id="received_by-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.approved_by.label() }}
-                {{ form.approved_by(class="form-control form-control-lg") }}
+                {{ form.approved_by(class="form-control form-control-lg form-sm") }}
                 <div id="approved_by-error" class="invalid-feedback"></div>
               </div>
               <div class="form-group">
                 {{ form.comments.label() }}
-                {{ form.comments(class="form-control form-control-lg") }}
+                {{ form.comments(class="form-control form-control-lg form-sm") }}
                 <div id="comments-error" class="invalid-feedback"></div>
               </div>
+              <div class="form-group">
+                {{ form.receipt.label() }}
+                {{ form.receipt(class="form-control-file") }}
+              </div>
             </fieldset>
-            <!-- <div class="form-group">
+            <div class="form-group">
               {{ form.submit(class="btn btn-outline-info") }}
-            </div> -->
-            <input type="submit" value="Submit">
+            </div>
           </form>
           <p class="test" style=>* Required field</p>
         </div>        
@@ -106,14 +114,20 @@
 
       <script>
         $(document).ready(function() {
-          var rowIndex = 0;
-          $('form').submit(function(event) {
-            rowIndex = rowIndex + 1;
-            var url = "{{ url_for('petty_cash_submit') }}";
+
+          var resultsFiltered = false;
+
+          $('#enterExp').submit(function(event) {
+            // if table was filtered, remove all rows
+            if (resultsFiltered === true) {
+              $('#tbody').find('tr').remove();
+              resultsFiltered = false;
+            };            
+            
             $.ajax({
               type: "POST",
-              url: url,
-              data: $('form').serialize()
+              url: "{{ url_for('petty_cash_submit') }}",
+              data: $('#enterExp').serialize()
             })
             .done(function(data) {
               // if form is not validated, show error messages
@@ -128,6 +142,7 @@
               }
               // if form is validated, add table row
               else {
+                console.log(data)
                 var tbody = $('#tbody');
                 var row = $(`<tr id="${data.id}">`);
 
@@ -177,7 +192,68 @@
                 }
             }
           });
-        });        
+
+          // $.ajaxSetup({
+          //   beforeSend: function(xhr, settings) {
+          //       if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+          //           xhr.setRequestHeader("X-CSRFToken", "{{ filter_form.csrf_token._value() }}")
+          //       }
+          //   }
+          // });
+
+          $('#filterExp').on('submit', function(event) {
+            
+            resultsFiltered = true;
+
+            // filtering table by date
+            $.ajax({
+              type: 'POST',
+              url: "{{ url_for('petty_cash_filter') }}",
+              data: $('#filterExp').serialize()
+            })
+            .done(function(data) {
+
+              $('#tbody').find('tr').remove();
+              data.forEach(function(result) {
+                var tbody = $('#tbody');
+                var row = $(`<tr id="${result.id}">`);
+
+                Object.entries(result).slice(1, 9).forEach(function([key, value], index) {
+                  if (value === null) {
+                    var cell = ('<td></td>');
+                  }
+                  else {
+                    // dynamically create id with form field name
+                    var cell = (`<td id="${key}" contenteditable="False">${value}</td>`);
+                  };
+                  row.append(cell);       
+                });
+                $(row).addClass("pettycash-entry")
+                tbody.append(row);
+              });
+              
+              // download excel file with results
+              // $('.export-img').on('click', function() {
+              //   console.log(data.date_range.from_date)
+              //   $.ajax({
+              //     type: "POST",
+              //     url: "{{ url_for('petty_cash_download') }}",
+              //     data: {
+              //       from_date: data.date_range.from_date,
+              //       to_date: data.date_range.to_date
+              //     }
+              //   })
+              //   .done(function(data) {
+              //     console.log(data);
+              //   });
+              //   event.preventDefault();
+              // });
+
+            });
+
+            event.preventDefault();
+          });
+        });
       </script>
       
       <div class="col-md-10">
@@ -185,7 +261,7 @@
           <table class="table table-striped table-hover">
             <thead style="margin-bottom: 100px;">
               <tr>
-                <th class="date">Date</th>
+                <th class="date table-border">Date</th>
                 <th class="receipt_no table-border">Receipt Number</th>
                 <th class="description table-border">Description</th>
                 <th class="amount_deposited table-border">Amount Deposited</th>
@@ -202,6 +278,7 @@
     </div>
   </div>
 
+ 
                   
                   
              

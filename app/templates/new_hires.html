@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="container-fluid">
-    <div class="row">
+  <div class="container-fluid container-newhires">
+    <div class="row justify-content-between">
       <div class="col-md-6 whitespace">
         {% for new_hire in new_hires %}
           <article class="media newhire-container">
@@ -11,14 +11,12 @@
                 <a class="mr-2" href="#">{{ new_hire.user.username }}</a>
                 <small class="text-muted">{{ new_hire.date_entered.strftime('%Y-%m-%d') }}</small>
               </div>
-              <div class="float-right collapse-icon">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrows-collapse" data-toggle="collapse" href="#newhire-info-{{ new_hire.id }}" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zm7-8a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 4.293V.5A.5.5 0 0 1 8 0zm-.5 11.707l-1.146 1.147a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 11.707V15.5a.5.5 0 0 1-1 0v-3.793z"/>
-                </svg>
+              <div class="float-right">
+                <a type='button' class="newhire-checkmark" data-toggle="modal" data-target="#deleteNewHire">✓</a>
               </div>              
               <div class="clearfix"></div>
               <hr class="newhire-line">
-              <div id="newhire-panel-{{ new_hire.id }}">
+              <div id="newhire-panel-{{ new_hire.id }}" class="newhire-panel">
                 <div class="float-left"><h3 class="newhire-header">{{ new_hire.first_name }} {{ new_hire.last_name }}</a></h3></div>
                 <div class="float-right"><h3 class="newhire-header">{{ new_hire.position }}</a></h3></div>
                 <div class="clearfix"></div>                           
@@ -47,10 +45,68 @@
               </div> 
             </div>
           </article>
+          <div class="modal fade" id="deleteNewHire" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Continue?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>This will remove the new hire from the list.</p>  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <form action="{{ url_for('delete_new_hire', newhire_id=new_hire.id) }}" method="POST">
+                    <input class="btn btn-success" type="submit" value="Continue">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         {% endfor %}
-        <a role="button" class="btn btn-secondary" href="{{ url_for('enter_new_hire') }}">Enter New Hire</a>
+      
+      </div>
+      <div class="col-md-5">
+        <div class="newhire-settings">
+          <h4 class="float-left">New Hires</h4>
+          <a role="button" class="btn btn-secondary btn-sm float-right" href="{{ url_for('enter_new_hire') }}">Enter New Hire</a>
+          <div class="clearfix"></div>
+          <hr>
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+              <div class="form-group">
+                {{ form.from_date.label() }}                
+                {{ form.from_date(class="form-control form-control-lg datepicker") }}
+              </div>
+              <div class="form-group">
+                {{ form.to_date.label() }}                
+                {{ form.to_date(class="form-control form-control-lg datepicker") }}                
+              </div>
+            </fieldset>
+            <div class="form-group">
+              {{ form.submit(class="btn btn-outline-info float-left") }}
+              <button id="clear-filter" class="btn btn-outline-danger float-right">Clear filter</button>
+              <script>
+                $(document).ready(function() {
+                  $('#clear-filter').on('click', function() {
+                    $('#from_date').val('');
+                    $('#to_date').val('');
+                  });
+                });
+              </script>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+
+          <hr>
+        </div>
       </div>
     </div>
+    <br><br>
   </div>
   
   

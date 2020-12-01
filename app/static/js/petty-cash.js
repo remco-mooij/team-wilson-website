@@ -1,13 +1,11 @@
 
+$(document).ready(function() {
 
+    $(function() {
+        $(".datepicker").datepicker();
+    });
 
-// $(document).ready(function() {
-
-//     $(function() {
-//         $(".datepicker").datepicker();
-//     });
-
-//     var clicked = false;
+    var clicked = false;
 
 
 //     $('#enterTrans').on('submit', function(event) {
@@ -66,50 +64,6 @@
 //         event.preventDefault();
 //     });
 
-//     $('#filterTrans').on('submit', function(event) {
-//         clicked = true;
-
-//         $.ajax({
-//             data: {
-//                 fromDate : $('#fromDate').val(),
-//                 toDate: $('#toDate').val(),
-//             },
-//             type : 'POST',
-//             url : '/filter'
-//         })
-//         .done(function(data) {
-
-//             if (data.error) {
-//                 $('#errorAlert').text(data.error).show();
-//             }
-//             // filter table
-        //     else {
-        //         $('#tbody').find('tr').remove();
-        //         var filteredData = data.result;
-
-        //         var tableArray = []
-        //         filteredData.forEach(function(entry) {
-        //             tableArray.push(entry);
-        //             console.log(entry);
-
-        //             var tbody = $('#tbody');
-        //             var row = $('<tr>');
-
-        //             entry.forEach(function(x) {
-        //                 var cell = ('<td>' + x + '</td>');
-        //                 row.append(cell);
-        //             });
-                    
-        //             tbody.append(row);
-
-        //         });
-
-        //     };
-        // });
-
-//         event.preventDefault();
-//     });
 
 
-
-// });
+});
